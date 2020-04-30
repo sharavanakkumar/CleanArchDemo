@@ -12,6 +12,7 @@ using Microsoft.EntityFrameworkCore;
 using CleanArch.mvc.Data;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using CleanArch.Infra.Data.Context;
 
 namespace CleanArch.mvc
 {
@@ -39,6 +40,9 @@ namespace CleanArch.mvc
                     Configuration.GetConnectionString("MyDBConnection")));
             services.AddDefaultIdentity<IdentityUser>()
                 .AddEntityFrameworkStores<ApplicationDbContext>();
+
+            services.AddDbContext<MyDBContext>(option => option.UseSqlServer(
+                 Configuration.GetConnectionString("MyDbCon")));
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
         }
