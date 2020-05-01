@@ -13,6 +13,7 @@ using CleanArch.mvc.Data;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using CleanArch.Infra.Data.Context;
+using CleanArch.Infra.IoC;
 
 namespace CleanArch.mvc
 {
@@ -45,6 +46,7 @@ namespace CleanArch.mvc
                  Configuration.GetConnectionString("MyDbCon")));
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
+            RegisterServices(services);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -73,6 +75,11 @@ namespace CleanArch.mvc
                     name: "default",
                     template: "{controller=Home}/{action=Index}/{id?}");
             });
+        }
+
+        private static void RegisterServices(IServiceCollection services)
+        {
+            DependencyContainer.RegisterServices(services);
         }
     }
 }
